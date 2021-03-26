@@ -99,7 +99,7 @@ void getName(){
     do{
         cout << "\nSo, what is your name? ";
         cin.clear();
-        //getline(cin, name);
+        getline(cin, name);
         string s1("Should I call you name then? ");
         s1.replace(18, 4, name);
         cout << endl << s1 << endl;
