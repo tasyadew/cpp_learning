@@ -34,7 +34,7 @@ int main(){
     ca.setNumber(atomNum);
 
     //display
-    cout << "Here is the atom's data: /n";
+    cout << "Here is the atom's data: \n";
     cout << "Name: " << ca.getName() << endl;
     cout << "Weight: " << ca.getWeight() << endl;
     cout << "Number: " << ca.getNumber() << endl;

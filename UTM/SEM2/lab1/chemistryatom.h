@@ -1,6 +1,7 @@
 #ifndef CHEMISTRYATOM_H
 #define CHEMISTRYATOM_H
 
+#include<string>
 class ChemistryAtom
 {
 

@@ -1,6 +1,7 @@
 #include "chemistryatom.h"
+using namespace std;
 
-void ChemistryAtom::setName(string n){
+void ChemistryAtom::setName(std::string n){
     name = n;
 }
 
