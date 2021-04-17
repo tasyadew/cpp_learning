@@ -6,7 +6,7 @@ LAB 1
 */
 
 #include<iostream>
-#include<cstring>
+#include<string>
 #include "chemistryatom.h"
 #include "chemistryatom.cpp"
 using namespace std;

@@ -4,17 +4,19 @@
 #include<string>
 class ChemistryAtom
 {
-
 	private:
-		string name;
+		std::string name;
         double atomicWeight;
         int atomicNumber;
 		
 	public:
-		void setName(string);
+		//mutator (setter functions)
+		void setName(std::string);
 		void setWeight(double);
         void setNumber(int);
-		string getName() const;
+
+		//accessor (getter functions)
+		std::string getName() const; 
 		double getWeight() const;
 		int getNumber() const;
 };
