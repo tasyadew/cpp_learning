@@ -1,10 +1,10 @@
 /*
  * ================= GROUP 2 =======================
  * Group Members & Matric Number:
- * 1) 
- * 2) 
- * 3)
- * 4)
+ * 1) Natasya Nadhira Binti Ahmad Nazrain
+ * 2) Tee Jun Hong
+ * 3) Debbie Low Tzi Wei
+ * 4) Hafiz Surya Nugraha
  * 
  * Course Code: SECV1113-01 
  * Assignment 1, Question 3 (in degree)
@@ -81,7 +81,7 @@ void solve1(){
     cin >> num1;
     cout << "Enter length BC : ";
     cin >> num2;
-    cout << "Enter angle ABC : ";
+    cout << "Enter angle ABC in degree : ";
     cin >> num3;
 
     //convert degree to radian
@@ -129,7 +129,7 @@ void solve3(){
     double ans = 0.0, temp = 0.0;
     cout << "Enter length AB : ";
     cin >> num1;
-    cout << "Enter angle BAD : ";
+    cout << "Enter angle BAD in degree : ";
     cin >> num2;
     cout << "Enter length BC : ";
     cin >> num3;
@@ -159,9 +159,9 @@ void solve4(){
     //ask user input
     double num1, num2, num3;
     double ans = 0.0, temp = 0.0;
-    cout << "Enter angle BDC : ";
+    cout << "Enter angle BDC in degree : ";
     cin >> num1;
-    cout << "Enter angle BCD : ";
+    cout << "Enter angle BCD in degree : ";
     cin >> num2;
     cout << "Enter length CD : ";
     cin >> num3;
