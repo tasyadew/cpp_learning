@@ -1,58 +1,60 @@
 #include <iostream>
+
 using namespace std;
 
-class Point{
-    private:
-        double x, y;
-    public:
-        Point (double, double); //constructor
-        void shift (double, double);
-        void set_x (double);
-        void set_y (double);
-        double get_x ();
-        double get_y ();
+class Point
+{
+	private:
+		double x;
+		double y;
+		
+	public:
+	  Point(double,double);
+	  void shift(double,double);
+	  void setX(double);
+	  void setY(double);
+	  double getX();
+	  double getY();
 };
 
-Point::Point (double vx=0, double vy=0){
-    x=vx;
-    y=vy;
+Point::Point(double vx=0, double vy=0){
+	x=vx;
+	y=vy;
 }
 
-void Point::set_x (double vx){
-    x = vx;
+void Point::setX(double vx)
+{  x = vx; }
+
+
+void Point::setY(double vy)
+{  y=vy; }
+
+
+double Point::getX(){
+	return x;
 }
 
-void Point::set_y (double vy){
-    y = vy;
+double Point::getY(){
+	return y;
 }
 
-double Point::get_x (){
-    return x;
-}
-
-double Point::get_y (){
-    return y;
-}
-
-void Point::shift (double vx, double vy){
-    double x_amount = vx+x;
-    double y_amount = vy+y;
+void Point::shift(double xv, double vy){
+	double x_amount = x+=x;
+	double y_amount = y+=y;
 }
 
 int main(){
-    Point p1 (1.0, 2.0);
-    Point p2;
-
-    cout << "Coordinates of p2 before shift : " << endl;
-    cout << "x = " << p2.get_x() << " " << "y = " << p2.get_y() << "\n\n";
-
-    //shift
-    p2.set_x(4.0);
-    p2.set_y(3.0);
-
-    p2.shift(p2.get_x(), p2.get_y());
-
-    cout << "Coordinates of p2 after shift : " << endl;
-    cout << "x = " << p2.get_x() << " " << "y = " << p2.get_y() << "\n\n";
-    
+	Point p1(1.0,2.0);
+	Point p2;
+	
+	cout << "Coordinates of p2 before shift " <<endl;
+	cout << "x = "<< p2.getX() << " y = "<< p2.getY()<<endl;
+	
+	p2.setX(3.0);
+	p2.setY(4.0);
+	
+	p2.shift(p2.getX(),p2.getY());
+	cout << "Coordinates of p2 after shift " <<endl;
+	cout << "x = "<< p2.getX() << " y = "<< p2.getY()<<endl;
+ return 0;	
 }
