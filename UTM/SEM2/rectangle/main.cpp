@@ -1,6 +1,6 @@
 #include<iostream>
-#include "rectangle.h"
-#include "rectangle.cpp"
+#include "Rectangle.h"
+
 using namespace std;
 
 int main(){
@@ -15,11 +15,15 @@ int main(){
 	box.setLength(recLength);
 	
 	//display 
-	cout << " Here is the Rectangle data\n";
-	cout << " Width: "<<box.getWidth() << endl;
-	cout << " Length: "<<box.getLength() << endl;
-	cout << " Area: "<<box.getArea() << endl;
+	cout << "Here is the Rectangle data\n";
+	cout << "Width: "<<box.getWidth() << endl;
+	cout << "Length: "<<box.getLength() << endl;
+	cout << "Area: "<<box.getArea() << endl;
 	
 	return 0;
 			
 }
+
+//to run using cmd:
+//locate the source file
+// "g++ main.cpp Rectangle.cpp -o main.exe"

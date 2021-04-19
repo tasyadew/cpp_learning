@@ -7,6 +7,7 @@ class Rectangle{
 		double length; 
 		
 	public:
+		Rectangle(); //constructor
 		void setWidth(double);
 		void setLength(double);
 		double getWidth() const;
