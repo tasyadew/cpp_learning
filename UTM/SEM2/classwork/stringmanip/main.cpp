@@ -39,8 +39,8 @@ int main(){
     string wifeName;
     wifeName = wifeFirstName + " " + familyName;
     string son("Beckham ");
-    son.insert(8, familyName);
-    string nickname = son.substr(0, 4);
+    son.insert(8, familyName); //start inserting at position 8
+    string nickname = son.substr(0, 4); //from pos 0 to pos 4 (Beck)
 
 
     cout << "\nHusband Full Name: "<< husband;
