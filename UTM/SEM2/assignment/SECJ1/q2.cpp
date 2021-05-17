@@ -3,7 +3,7 @@
     Matric No: A20EC0103
     Course: SECJ1023-08
 
-    Assignment 1, Question 3
+    Assignment 1, Question 2
 */
 
 #include <iostream>
