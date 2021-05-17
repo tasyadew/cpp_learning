@@ -5,17 +5,13 @@
 
 using namespace std;
 
-const int SIZE = 5;
+const int SIZE = 2;
 
 int main(){
 
     //variables
     int num = 0;
-    string* name[SIZE];
-    string* program[SIZE];
-    string* aa[SIZE];
-    string* ps[SIZE];
-    string* project[SIZE];
+    string name[SIZE], program[SIZE], aa[SIZE], ps[SIZE], project[SIZE];
 
     ifstream inputFile ("pgstudents.txt");
 

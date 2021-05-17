@@ -1,3 +1,11 @@
+/*
+    Name: Natasya Nadhira Binti Ahmad Nazrain
+    Matric No: A20EC0103
+    Course: SECJ1023-08
+
+    Assignment 1, Question 3
+*/
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -49,6 +57,9 @@ class Student{
         string s_name;
         string program;
     public:
+        Project p;
+        AcademicAdvisor aa;
+        ProjectSupervisor ps;
         Student(){
             s_name = "";
             program = "";
@@ -69,26 +80,63 @@ class Student{
 
 int main(){
 
-    //Read file
+    //variables
+    const int SIZE = 100;   //max capacity of array is 100 elements
+    string name[SIZE], program[SIZE], aa[SIZE], ps[SIZE], project[SIZE];
+
     ifstream inputFile ("pgstudents.txt");
-    int n = 0;  //number of students
-    inputFile >> n;
-    const int SIZE = n;
 
-    Student* s[100] = new Student;
+    //Read file
+    int num = 0;    //capacity indicated in the input file
+    inputFile >> num;
+    inputFile.ignore();
+    int i = 0;
+    while (!inputFile.eof()){
 
-    //placeholder variable
-    string name, program, advisor, supervisor, project;
+        inputFile.ignore(256, '\n');
+        getline(inputFile, name[i]);
+        getline(inputFile, program[i]);
+        getline(inputFile, aa[i]);
+        getline(inputFile, ps[i]);
+        getline(inputFile, project[i]);
 
-    while(!inputFile.eof()){
-        for (int i = 0; i < SIZE; i++){
-            inputFile.ignore();
-            s[i]->set_name(getline(inputFile, name));
-        }
+        i++;
     }
 
-    
+    //Initialize dynamic student array
+    Student* s = new Student[SIZE];
 
+    //Allocate to students array
+    for (int j = 0; j < SIZE; j++){
+        s[j].set_name(name[j]);
+        s[j].set_program(program[j]);
+        s[j].aa.set_aa(aa[j]);
+        s[j].ps.set_ps(ps[j]);
+        s[j].p.set_project(project[j]);
+    }
+
+    //Output
+    ofstream outFile("output.txt");
+  
+    outFile << "THE LIST OF POSTGRADUATE STUDENTS\n"; 
+    outFile << left << setw(3) << "No";
+    outFile << left << setw(30) << "Name";
+    outFile << left << setw(30) << "Supervisor";
+    outFile << "Project\n\n";
+
+    //loop content
+    for (int k = 0; k < num; k++){  //num is the total specified in the input file
+        outFile << left << setw(3) << k+1;
+        outFile << left << setw(30) << s[k].get_name();
+        outFile << left << setw(30) << s[k].ps.get_ps();
+        outFile << left << setw(50) << s[k].p.get_project() << endl;
+    }
+
+    //close file and delete array
+    outFile.close();
+
+    delete [] s;
+    s = NULL;
 
     return 0;
 }
