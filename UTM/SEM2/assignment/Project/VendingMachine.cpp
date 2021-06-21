@@ -4,7 +4,8 @@
 #include <cstdlib>
 using namespace std;
 
-#define SIZE 15 //size of stock array 
+#define SIZE 12 //size of stock array 
+#define MAX_SIZE 30//maximum capacity of stocks that vending machine can hold
 
 
 /*---Class Defination--------------------------------------------------------------------------*/
@@ -18,6 +19,11 @@ class Stock{
         int currentStock;
         string expiraryDate;
     public:
+        //Accessors
+        int getID(){return stockID;}
+        string getName(){return stockName;}
+        float getPrice(){return stockPrice;}
+        int getTotalStock(){return currentStock;}
 };
 
 //Food - Chocolate, Cookies
@@ -103,7 +109,25 @@ class PaymentSystem{
 
 class VendingMachine{
     private:
+        int numStock;
+        PaymentSystem ps; //composition
+        Stock *sto;       //aggregation
     public:
+        VendingMachine(){
+            numStock = 0;
+            sto = new Stock[MAX_SIZE];
+        }
+
+        void addStock(Stock* s){
+            if (numStock < MAX_SIZE){
+                sto[numStock] = *s; //dereference
+                numStock++;
+            }else{
+                cout << "Sorry! The vending machine can only hold until " 
+                     << MAX_SIZE << " stocks only." << endl;
+            }
+        }
+
         void menu(){
             cout << string(15, ' ') << "VENDING MACHINE UTM" << endl;
             cout << string(50,'=') << endl;
@@ -112,21 +136,38 @@ class VendingMachine{
             //food section
             cout << " FOOD" << endl;
             cout << string(50,'=') << endl;
-            for(int i = 1; i <= 9; i++){
-                //cout << " " << setfill('0') << setw(2) << 
+            for(int i = 0; i < 6; i++){
+                cout << "| " << setfill('0') << setw(2) << right << sto[i].getID() << " | ";
+                cout << setfill(' ') << setw(20) << left << sto[i].getName() << "| ";
+                cout << setfill(' ') << setw(11) << left << fixed << setprecision(2) << sto[i].getPrice() << "| ";
+                cout << setfill(' ') << setw(7) << left << sto[i].getTotalStock() << "|" << endl;
             }
             
             //drink section
+            cout << string(50,'=') << endl;
             cout << " DRINK" << endl;
             cout << string(50,'=') << endl;
+            for(int i = 6; i < SIZE; i++){
+                cout << "| " << setfill('0') << setw(2) << right << sto[i].getID() << " | ";
+                cout << setfill(' ') << setw(20) << left << sto[i].getName() << "| ";
+                cout << setfill(' ') << setw(11) << left << fixed << setprecision(2) << sto[i].getPrice() << "| ";
+                cout << setfill(' ') << setw(7) << left << sto[i].getTotalStock() << "|" << endl;
+            }
+            cout << string(50,'=') << endl;
+            cout << " 0 for Exit" << endl;
+            cout << string(50,'=') << endl << endl;
+            cout << "Enter ID => ";            
         }
 };
 
 /*---End Of Class Defination----------------------------------------------------------------------*/
 
 int main(){
-    //object declarations
-    VendingMachine vm;
+    //variables
+    int inputID;
+    char inputConfirmation;
+    int inputPayment;
+
 
     //Available Stocks in vending machine : Predefined
     Chocolates f1(1, "Cadbury Chocolate", 3.5, 23, "27.03.2023", 40, "Dark Chocolate");
@@ -143,21 +184,28 @@ int main(){
     SoftDrinks d6(12, "Coca Cola", 2.9, 14, "10.05.2022", 355, "Can");
 
     //Assign Objects into an array
-    Stock arr[SIZE] = {f1, f2, f3, f4, f5, f6, d1, d2, d3, d4, d5, d6};
+    Stock *list[SIZE] = {&f1, &f2, &f3, &f4, &f5, &f6, &d1, &d2, &d3, &d4, &d5, &d6};
+
+    //object declarations
+    VendingMachine vm;
+
+    //adding stocks into vending machine
+    for (int i = 0; i < SIZE; i++){
+        vm.addStock(list[i]);
+    }
 
     //Providing interface to user
     vm.menu();
-    int input;
-    cin >> input;
+    cin >> inputID;
 
-    while (input != 0){
-
+    while (inputID != 0){
+        
         system("pause");
         system("cls");
 
         //ask for new operation until user choose exit
         vm.menu();
-        cin >> input; 
+        cin >> inputID; 
     }
 
     cout << "Closing program...";
