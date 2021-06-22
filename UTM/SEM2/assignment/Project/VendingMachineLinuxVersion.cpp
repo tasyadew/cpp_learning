@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <cstdlib>
 using namespace std;
 
 #define SIZE 12 //size of stock array 
@@ -228,6 +227,7 @@ class PaymentSystem
         //Accessor
         float getUserPay(){return userPay;}
         float getStockPrice(){return price;}
+
 };
 
 class VendingMachine
@@ -235,7 +235,6 @@ class VendingMachine
     private:
         int numStock;
         float addPayment;
-        bool cancel;
         Stock *sto[MAX_SIZE];   //aggregation
         PaymentSystem ps;       //composition     
 
@@ -244,15 +243,14 @@ class VendingMachine
         {
             numStock = 0;
             addPayment = 0.0;
-            cancel = false;
         }
         void menu();
         void addStock(Stock*);
-        bool payment();
+        void displayPayment();
 };
 
 
-/*---Class Definition-----------------------------------------------------------------------------*/
+/*---Class Defination-----------------------------------------------------------------------------*/
 
 void VendingMachine::menu()
 {
@@ -308,44 +306,29 @@ void VendingMachine::addStock(Stock* s)
 }
 
 //Consist of PaymentSystem obj by using Composition
-bool VendingMachine::payment()
+void VendingMachine::displayPayment()
 { 
     //verify amount
     cout << endl;
-    while (!ps.verifyPayment()) //escape loop if user payment success or cancel = true
+    while (!(ps.verifyPayment())) //user pay less than stock price
     { 
         cout << "Not enough Payment! Please add RM " << fixed << setprecision(2)
              << ps.calcAddPayment() << " more => ";
         cin >> addPayment;
-        if (addPayment > 0) //positive amount of payment
-        {
-            ps.updatePayment(addPayment);
-        }
-        else
-        {
-            cout << endl;
-            cout << "You have cancelled the payment!" << endl;
-            cout << "Refunding RM " << ps.getUserPay() << endl;
-            return false;
-        }
+        ps.updatePayment(addPayment);
     }
-    
 
     //Payment successful when user pay more or equal to price
     cout << endl;
-    if (!cancel)
-    {
-        if(ps.calcBalance() == 0) //userpay == price
-        { 
-            cout << "Payment Successful!" << endl;
-        }
-        else //userpay > price
-        {
-            cout << "Payment Successful!" << endl;
-            cout << "Your balance is RM " << fixed << setprecision(2) << ps.calcBalance() << endl;
-        }
+    if(ps.calcBalance() == 0) //userpay == price
+    { 
+        cout << "Payment Successful!" << endl;
     }
-    return true;
+    else //userpay > price
+    {
+        cout << "Payment Successful!" << endl;
+        cout << "Your balance is RM " << fixed << setprecision(2) << ps.calcBalance() << endl;
+    }
 }
 
 
@@ -420,35 +403,21 @@ int main(){
                 else
                 {
                     //ask user to input payment
-                    cout << endl;
-                    cout << "!! TO CANCEL THE PURCHASE, INPUT VALUE OF 0 OR LESS !!" << endl << endl;
                     cout << "Total amount to pay is RM " << list[inputID]->getPrice() << endl;
                     cout << "Enter amount to pay => RM ";
                     cin >> inputPayment;
 
-                    if(inputPayment > 0)
-                    {
-                        //using composition to access PaymentSystem
-                        VendingMachine v(inputPayment, list[inputID]->getPrice()); 
+                    //using composition to access PaymentSystem
+                    VendingMachine v(inputPayment, list[inputID]->getPrice()); 
+                    v.displayPayment(); 
+                    cout << "Enjoy your " << list[inputID]->getName() << "!" << endl;
 
-                        if(v.payment()) //if purchase successful
-                        {
-                            //display item purchased and stock--
-                            cout << "Enjoy your " << list[inputID]->getName() << "!" << endl;
-                            (*list[inputID])--;//dereference object to be operator overload 
-                        } 
-                    }
-                    else
-                    {
-                        cout << endl;
-                        cout << "You have cancelled the payment!" << endl;
-                    }
+                    //stock - 1 after purchase successful
+                    (*list[inputID])--; //dereference object to be operator overload 
                 }
             }
         }
 
-        system("pause");
-        system("cls");
 
         //ask for new operation until user choose exit
         vm.menu();
@@ -458,7 +427,7 @@ int main(){
     //when user choose Exit
     cout << "Thank you for using this vending machine! " << endl << endl;
     cout << "Closing program..." << endl;
-    exit(EXIT_SUCCESS);
+
 
     return 0;
 }
