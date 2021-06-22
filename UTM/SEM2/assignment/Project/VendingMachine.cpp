@@ -11,20 +11,24 @@ using namespace std;
 /*---Class Specification--------------------------------------------------------------------------*/
 
 //Stock Inheritance Hierarchies 
-class Stock{
+class Stock
+{
     protected:
         int stockID;
         string stockName;
         float stockPrice;
         int currentStock;
         string expiryDate;
+
     public:
-        Stock(int i = 0, string n = "", float p = 0.0, int c = 0){
+        Stock(int i = 0, string n = "", float p = 0.0, int c = 0)
+        {
             stockID = i;
             stockName = n;
             stockPrice = p;
             currentStock = c;
         }
+
         //Accessors
         int getID(){return stockID;}
         string getName(){return stockName;}
@@ -32,21 +36,27 @@ class Stock{
         int getTotalStock(){return currentStock;}
 
         //virtual void (applying polymorphism concept)
-        virtual void showDetails(){
+        virtual void showDetails()
+        {
             cout << "ERROR: No data to be displayed!" << endl;
         }
 
-        Stock operator--(int){
+        //Operator Overloading of post decrement
+        Stock operator--(int)
+        {
             return currentStock--;
         }
 };
 
 //Food - Chocolate, Cookies
-class Food : public Stock{
+class Food : public Stock
+{
     protected:
         int weight;
+
     public:
-        Food(int i = 0, string n = "", float p = 0.0, int c = 0, int w = 0){
+        Food(int i = 0, string n = "", float p = 0.0, int c = 0, int w = 0)
+        {
             stockID = i;
             stockName = n;
             stockPrice = p;
@@ -54,16 +64,20 @@ class Food : public Stock{
             weight = w;
         }
 
-        void showDetails(){
+        void showDetails()
+        {
             cout << "ERROR: Data displayed from class Food!" << endl;
         }
 };
 
-class Chocolates : public Food{
+class Chocolates : public Food
+{
     private:
         string type;
+
     public:
-        Chocolates(int i, string n, float p, int q, string d, int w, string t){
+        Chocolates(int i, string n, float p, int q, string d, int w, string t)
+        {
             stockID = i;
             stockName = n;
             stockPrice = p;
@@ -73,7 +87,8 @@ class Chocolates : public Food{
             type = t;
         }   
 
-        void showDetails(){
+        void showDetails()
+        {
             cout << "Name        : " << stockName << endl;
             cout << "Type        : " << type << endl;
             cout << "Expiry Date : " << expiryDate << endl;
@@ -81,11 +96,14 @@ class Chocolates : public Food{
         }     
 };
 
-class Cookies : public Food{
+class Cookies : public Food
+{
     private:
         string flavour;
+
     public:
-        Cookies(int i, string n, float p, int q, string d, int w, string f){
+        Cookies(int i, string n, float p, int q, string d, int w, string f)
+        {
             stockID = i;
             stockName = n;
             stockPrice = p;
@@ -95,7 +113,8 @@ class Cookies : public Food{
             flavour = f;
         }
 
-        void showDetails(){
+        void showDetails()
+        {
             cout << "Name        : " << stockName << endl;
             cout << "Flavour     : " << flavour << endl;
             cout << "Expiry Date : " << expiryDate << endl;
@@ -104,11 +123,14 @@ class Cookies : public Food{
 };
 
 //Drinks - FruitJuice, SoftDrinks
-class Drinks : public Stock{
+class Drinks : public Stock
+{
     protected:
         int volume;
+
     public:
-        Drinks(int i = 0, string n = "", float p = 0.0, int c = 0, int v = 0){
+        Drinks(int i = 0, string n = "", float p = 0.0, int c = 0, int v = 0)
+        {
             stockID = i;
             stockName = n;
             stockPrice = p;
@@ -116,27 +138,32 @@ class Drinks : public Stock{
             volume = v;
         }
 
-        void showDetails(){
+        void showDetails()
+        {
             cout << "ERROR: Data displayed from class Drink!" << endl;
         }
     
 };
 
-class FruitJuice : public Drinks{
+class FruitJuice : public Drinks
+{
     private:
         string fruit;
+
     public:
-        FruitJuice(int i, string n, float p, int q, string d, int v, string f){
-        stockID = i;
-        stockName = n;
-        stockPrice = p;
-        currentStock = q;
-        expiryDate = d;
-        volume = v;
-        fruit = f;
+        FruitJuice(int i, string n, float p, int q, string d, int v, string f)
+        {
+            stockID = i;
+            stockName = n;
+            stockPrice = p;
+            currentStock = q;
+            expiryDate = d;
+            volume = v;
+            fruit = f;
         }
 
-        void showDetails(){
+        void showDetails()
+        {
             cout << "Name        : " << stockName << endl;
             cout << "Fruit       : " << fruit << endl;
             cout << "Expiry Date : " << expiryDate << endl;
@@ -144,21 +171,25 @@ class FruitJuice : public Drinks{
         }   
 };
 
-class SoftDrinks : public Drinks{
+class SoftDrinks : public Drinks
+{
     private: 
         string packaging;
+
     public:
-        SoftDrinks(int i, string n, float p, int q, string d, int v, string pack){
-        stockID = i;
-        stockName = n;
-        stockPrice = p;
-        currentStock = q;
-        expiryDate = d;
-        volume = v;
-        packaging = pack;
+        SoftDrinks(int i, string n, float p, int q, string d, int v, string pack)
+        {
+            stockID = i;
+            stockName = n;
+            stockPrice = p;
+            currentStock = q;
+            expiryDate = d;
+            volume = v;
+            packaging = pack;
         }
 
-        void showDetails(){
+        void showDetails()
+        {
             cout << "Name        : " << stockName << endl;
             cout << "Packaging   : " << packaging << endl;
             cout << "Expiry Date : " << expiryDate << endl;
@@ -166,64 +197,75 @@ class SoftDrinks : public Drinks{
         }   
 };
 
-class PaymentSystem{
+class PaymentSystem
+{
     private:
         float userPay;
         float price;
 
     public:
-        PaymentSystem(float user = 0.0, float stock = 0.0){
+        PaymentSystem(float user, float stock)
+        {
             userPay = user;
             price = stock;
         }
 
-        bool verifyPayment(){
-            if(userPay >= price){
+        bool verifyPayment()
+        {
+            if(userPay >= price) 
                 return true;
-            }else{
+            else 
                 return false;
-            }
         }
 
-        float updatePayment(float addPay){
-            return userPay+=addPay;
-        }
+        //if verifyPayment is true
+        float calcBalance(){return userPay - price;}
 
-        float calcPayment(){
-            return userPay - price;
-        }
+        //if verifyPayment is false
+        float updatePayment(float addPay){return userPay+=addPay;}
+        float calcAddPayment(){return price - userPay;}
+
+        //Accessor
+        float getUserPay(){return userPay;}
+        float getStockPrice(){return price;}
+
 };
 
-class VendingMachine{
+class VendingMachine
+{
     private:
         int numStock;
+        float addPayment;
         Stock *sto[MAX_SIZE];   //aggregation
-        PaymentSystem ps;       //composition
-    public:
+        PaymentSystem ps;       //composition     
 
-        VendingMachine(){
+    public:
+        VendingMachine(float u = 0, float s = 0) : ps(u, s)
+        {
             numStock = 0;
+            addPayment = 0.0;
         }
         void menu();
         void addStock(Stock*);
-        
-        void displayPayment(){ //will use obj ps to performed payment system
-            
-        }
-
+        void displayPayment();
 };
+
 
 /*---Class Defination-----------------------------------------------------------------------------*/
 
-void VendingMachine::menu(){
+void VendingMachine::menu()
+{
+    //header
     cout << string(15, ' ') << "VENDING MACHINE UTM" << endl;
     cout << string(50,'=') << endl;
     cout << "| ID | Name                | Price (RM) | Stocks |" << endl; //spaces: 4,21,12,8
-    cout << string(50,'=') << endl;
+
     //food section
+    cout << string(50,'=') << endl;
     cout << " FOOD" << endl;
     cout << string(50,'=') << endl;
-    for(int i = 0; i < 6; i++){
+    for(int i = 0; i < 6; i++)
+    {
         cout << "| " << setfill('0') << setw(2) << right << sto[i]->getID() << " | ";
         cout << setfill(' ') << setw(20) << left << sto[i]->getName() << "| ";
         cout << setfill(' ') << setw(11) << left << fixed << setprecision(2) << sto[i]->getPrice() << "| ";
@@ -234,27 +276,62 @@ void VendingMachine::menu(){
     cout << string(50,'=') << endl;
     cout << " DRINK" << endl;
     cout << string(50,'=') << endl;
-    for(int i = 6; i < SIZE; i++){
+    for(int i = 6; i < SIZE; i++)
+    {
         cout << "| " << setfill('0') << setw(2) << right << sto[i]->getID() << " | ";
         cout << setfill(' ') << setw(20) << left << sto[i]->getName() << "| ";
         cout << setfill(' ') << setw(11) << left << fixed << setprecision(2) << sto[i]->getPrice() << "| ";
         cout << setfill(' ') << setw(7) << left << sto[i]->getTotalStock() << "|" << endl;
     }
+
+    //footer
     cout << string(50,'=') << endl;
     cout << " 0 for Exit" << endl;
     cout << string(50,'=') << endl << endl;
     cout << "Enter ID => ";            
 }
 
-void VendingMachine::addStock(Stock* s){
-    if (numStock < MAX_SIZE){
+//Adding stock objects by using Aggregation
+void VendingMachine::addStock(Stock* s)
+{
+    if (numStock < MAX_SIZE)
+    {
         sto[numStock] = s; //dereference
         numStock++;
-    }else{
+    }
+    else
+    {
         cout << "Sorry! The vending machine can only hold until " 
                 << MAX_SIZE << " stocks only." << endl;
     }
 }
+
+//Consist of PaymentSystem obj by using Composition
+void VendingMachine::displayPayment()
+{ 
+    //verify amount
+    cout << endl;
+    while (!(ps.verifyPayment())) //user pay less than stock price
+    { 
+        cout << "Not enough Payment! Please add RM " << fixed << setprecision(2)
+             << ps.calcAddPayment() << " more => ";
+        cin >> addPayment;
+        ps.updatePayment(addPayment);
+    }
+
+    //Payment successful when user pay more or equal to price
+    cout << endl;
+    if(ps.calcBalance() == 0) //userpay == price
+    { 
+        cout << "Payment Successful!" << endl;
+    }
+    else //userpay > price
+    {
+        cout << "Payment Successful!" << endl;
+        cout << "Your balance is RM " << fixed << setprecision(2) << ps.calcBalance() << endl;
+    }
+}
+
 
 /*---Main Function--------------------------------------------------------------------------------*/
 
@@ -282,7 +359,7 @@ int main(){
     Stock *list[SIZE] = {&f1, &f2, &f3, &f4, &f5, &f6, &d1, &d2, &d3, &d4, &d5, &d6};
 
     //adding stocks into vending machine
-    VendingMachine vm;
+    VendingMachine vm;  //using deafault constructor
     for (int i = 0; i < SIZE; i++){
         vm.addStock(list[i]);
     }
@@ -291,20 +368,28 @@ int main(){
     vm.menu();
     cin >> inputID;
 
-    while (inputID != 0){
-        if (inputID < 0 || inputID > SIZE){ //checking validity of input ID
+    //loop as long as user doesn't press exit
+    while (inputID != 0)
+    {
+        if (inputID < 0 || inputID > SIZE) //checking validity of input ID
+        { 
             cout << "Error: Input ID is out of range!" << endl;
-        }else{
+        }
+        else
+        {
             inputID--; //to standardize with array position
 
             //To check if stock is available or not
             int tempTotal = list[inputID]->getTotalStock();
-            if(tempTotal == 0){
+            if(tempTotal == 0) 
+            {
                 cout << "Sorry!! Out of Stock." << endl;
-            }else{
+            }
+            else
+            {
                 //Show additional details before buying confirmation
                 cout << "\nAdditional Details:\n"; 
-                list[inputID]->showDetails();
+                list[inputID]->showDetails(); //appliying concept of polymorphism
                 cout << endl << endl;
 
                 //ask for purchase confirmation
@@ -312,16 +397,24 @@ int main(){
                 cin >> inputConfirmation;
 
                 //if user input other than y, it will loop back to menu
-                if(!(inputConfirmation == 'y' || inputConfirmation == 'Y')){
+                if(!(inputConfirmation == 'y' || inputConfirmation == 'Y'))
+                {
                     cout << "Returning to main menu..." << endl;
-                }else{
+                }
+                else
+                {
+                    //ask user to input payment
                     cout << "Total amount to pay is RM " << list[inputID]->getPrice() << endl;
                     cout << "Enter amount to pay => RM ";
                     cin >> inputPayment;
-                    PaymentSystem ps(inputPayment, list[inputID]->getPrice());
-                    vm.displayPayment();
 
-                    (*list[inputID])--; //dereference object to be operator overload. (stock-1)
+                    //using composition to access PaymentSystem
+                    VendingMachine v(inputPayment, list[inputID]->getPrice()); 
+                    v.displayPayment(); 
+                    cout << "Enjoy your " << list[inputID]->getName() << "!" << endl;
+
+                    //stock - 1 after purchase successful
+                    (*list[inputID])--; //dereference object to be operator overload 
                 }
             }
         }
