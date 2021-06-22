@@ -8,7 +8,7 @@ using namespace std;
 #define MAX_SIZE 30//maximum capacity of stocks that vending machine can hold
 
 
-/*---Class Specification--------------------------------------------------------------------------*/
+/*---Class Defination--------------------------------------------------------------------------*/
 
 //Stock Inheritance Hierarchies 
 class Stock{
@@ -46,17 +46,7 @@ class Food : public Stock{
     protected:
         int weight;
     public:
-        Food(int i = 0, string n = "", float p = 0.0, int c = 0, int w = 0){
-            stockID = i;
-            stockName = n;
-            stockPrice = p;
-            currentStock = c;
-            weight = w;
-        }
 
-        void showDetails(){
-            cout << "ERROR: Data displayed from class Food!" << endl;
-        }
 };
 
 class Chocolates : public Food{
@@ -108,17 +98,6 @@ class Drinks : public Stock{
     protected:
         int volume;
     public:
-        Drinks(int i = 0, string n = "", float p = 0.0, int c = 0, int v = 0){
-            stockID = i;
-            stockName = n;
-            stockPrice = p;
-            currentStock = c;
-            volume = v;
-        }
-
-        void showDetails(){
-            cout << "ERROR: Data displayed from class Drink!" << endl;
-        }
     
 };
 
@@ -169,94 +148,64 @@ class SoftDrinks : public Drinks{
 class PaymentSystem{
     private:
         float userPay;
-        float price;
-
     public:
-        PaymentSystem(float user = 0.0, float stock = 0.0){
-            userPay = user;
-            price = stock;
-        }
-
-        bool verifyPayment(){
-            if(userPay >= price){
-                return true;
-            }else{
-                return false;
-            }
-        }
-
-        float updatePayment(float addPay){
-            return userPay+=addPay;
-        }
-
-        float calcPayment(){
-            return userPay - price;
-        }
+        //Mutator
+        void setPayment(float pay){userPay = pay;}
 };
 
 class VendingMachine{
     private:
         int numStock;
-        Stock *sto[MAX_SIZE];   //aggregation
         PaymentSystem ps;       //composition
+        Stock *sto[MAX_SIZE];   //aggregation
     public:
-
         VendingMachine(){
             numStock = 0;
         }
-        void menu();
-        void addStock(Stock*);
-        
-        void displayPayment(){ //will use obj ps to performed payment system
-            
+
+        void addStock(Stock* s){
+            if (numStock < MAX_SIZE){
+                sto[numStock] = s; //dereference
+                numStock++;
+            }else{
+                cout << "Sorry! The vending machine can only hold until " 
+                     << MAX_SIZE << " stocks only." << endl;
+            }
         }
 
+        void menu(){
+            cout << string(15, ' ') << "VENDING MACHINE UTM" << endl;
+            cout << string(50,'=') << endl;
+            cout << "| ID | Name                | Price (RM) | Stocks |" << endl; //spaces: 4,21,12,8
+            cout << string(50,'=') << endl;
+            //food section
+            cout << " FOOD" << endl;
+            cout << string(50,'=') << endl;
+            for(int i = 0; i < 6; i++){
+                cout << "| " << setfill('0') << setw(2) << right << sto[i]->getID() << " | ";
+                cout << setfill(' ') << setw(20) << left << sto[i]->getName() << "| ";
+                cout << setfill(' ') << setw(11) << left << fixed << setprecision(2) << sto[i]->getPrice() << "| ";
+                cout << setfill(' ') << setw(7) << left << sto[i]->getTotalStock() << "|" << endl;
+            }
+            
+            //drink section
+            cout << string(50,'=') << endl;
+            cout << " DRINK" << endl;
+            cout << string(50,'=') << endl;
+            for(int i = 6; i < SIZE; i++){
+                cout << "| " << setfill('0') << setw(2) << right << sto[i]->getID() << " | ";
+                cout << setfill(' ') << setw(20) << left << sto[i]->getName() << "| ";
+                cout << setfill(' ') << setw(11) << left << fixed << setprecision(2) << sto[i]->getPrice() << "| ";
+                cout << setfill(' ') << setw(7) << left << sto[i]->getTotalStock() << "|" << endl;
+            }
+            cout << string(50,'=') << endl;
+            cout << " 0 for Exit" << endl;
+            cout << string(50,'=') << endl << endl;
+            cout << "Enter ID => ";            
+        }
 };
 
-/*---Class Defination-----------------------------------------------------------------------------*/
 
-void VendingMachine::menu(){
-    cout << string(15, ' ') << "VENDING MACHINE UTM" << endl;
-    cout << string(50,'=') << endl;
-    cout << "| ID | Name                | Price (RM) | Stocks |" << endl; //spaces: 4,21,12,8
-    cout << string(50,'=') << endl;
-    //food section
-    cout << " FOOD" << endl;
-    cout << string(50,'=') << endl;
-    for(int i = 0; i < 6; i++){
-        cout << "| " << setfill('0') << setw(2) << right << sto[i]->getID() << " | ";
-        cout << setfill(' ') << setw(20) << left << sto[i]->getName() << "| ";
-        cout << setfill(' ') << setw(11) << left << fixed << setprecision(2) << sto[i]->getPrice() << "| ";
-        cout << setfill(' ') << setw(7) << left << sto[i]->getTotalStock() << "|" << endl;
-    }
-    
-    //drink section
-    cout << string(50,'=') << endl;
-    cout << " DRINK" << endl;
-    cout << string(50,'=') << endl;
-    for(int i = 6; i < SIZE; i++){
-        cout << "| " << setfill('0') << setw(2) << right << sto[i]->getID() << " | ";
-        cout << setfill(' ') << setw(20) << left << sto[i]->getName() << "| ";
-        cout << setfill(' ') << setw(11) << left << fixed << setprecision(2) << sto[i]->getPrice() << "| ";
-        cout << setfill(' ') << setw(7) << left << sto[i]->getTotalStock() << "|" << endl;
-    }
-    cout << string(50,'=') << endl;
-    cout << " 0 for Exit" << endl;
-    cout << string(50,'=') << endl << endl;
-    cout << "Enter ID => ";            
-}
-
-void VendingMachine::addStock(Stock* s){
-    if (numStock < MAX_SIZE){
-        sto[numStock] = s; //dereference
-        numStock++;
-    }else{
-        cout << "Sorry! The vending machine can only hold until " 
-                << MAX_SIZE << " stocks only." << endl;
-    }
-}
-
-/*---Main Function--------------------------------------------------------------------------------*/
 
 int main(){
     //variables
@@ -281,8 +230,11 @@ int main(){
     //Assign Objects into an array
     Stock *list[SIZE] = {&f1, &f2, &f3, &f4, &f5, &f6, &d1, &d2, &d3, &d4, &d5, &d6};
 
-    //adding stocks into vending machine
+    //object declarations
     VendingMachine vm;
+    PaymentSystem p;
+
+    //adding stocks into vending machine
     for (int i = 0; i < SIZE; i++){
         vm.addStock(list[i]);
     }
@@ -303,7 +255,7 @@ int main(){
                 cout << "Sorry!! Out of Stock." << endl;
             }else{
                 //Show additional details before buying confirmation
-                cout << "\nAdditional Details:\n"; 
+                cout << "Additional Details:\n"; 
                 list[inputID]->showDetails();
                 cout << endl << endl;
 
@@ -315,13 +267,14 @@ int main(){
                 if(!(inputConfirmation == 'y' || inputConfirmation == 'Y')){
                     cout << "Returning to main menu..." << endl;
                 }else{
-                    cout << "Total amount to pay is RM " << list[inputID]->getPrice() << endl;
+                    
+                    cout << "Total amount to pay is RM " << endl;
                     cout << "Enter amount to pay => RM ";
                     cin >> inputPayment;
-                    PaymentSystem ps(inputPayment, list[inputID]->getPrice());
-                    vm.displayPayment();
-
-                    (*list[inputID])--; //dereference object to be operator overload. (stock-1)
+                    p.setPayment(inputPayment);
+                    cout << endl << "Stock before: " << list[inputID]->getTotalStock() << endl;
+                    (*list[inputID])--; //dereference object to be operator overload
+                    cout << endl << "Stock After: " << list[inputID]->getTotalStock() << endl;
                 }
             }
         }
@@ -336,7 +289,7 @@ int main(){
     
     //when user choose Exit
     cout << "Thank you for using this vending machine! " << endl << endl;
-    cout << "Closing program..." << endl;
+    cout << "Closing program...";
     exit(EXIT_SUCCESS);
 
     return 0;
