@@ -227,7 +227,6 @@ class PaymentSystem
         //Accessor
         float getUserPay(){return userPay;}
         float getStockPrice(){return price;}
-
 };
 
 class VendingMachine
@@ -235,6 +234,7 @@ class VendingMachine
     private:
         int numStock;
         float addPayment;
+        bool cancel;
         Stock *sto[MAX_SIZE];   //aggregation
         PaymentSystem ps;       //composition     
 
@@ -243,14 +243,15 @@ class VendingMachine
         {
             numStock = 0;
             addPayment = 0.0;
+            cancel = false;
         }
         void menu();
         void addStock(Stock*);
-        void displayPayment();
+        bool payment();
 };
 
 
-/*---Class Defination-----------------------------------------------------------------------------*/
+/*---Class Definition-----------------------------------------------------------------------------*/
 
 void VendingMachine::menu()
 {
@@ -306,17 +307,28 @@ void VendingMachine::addStock(Stock* s)
 }
 
 //Consist of PaymentSystem obj by using Composition
-void VendingMachine::displayPayment()
+bool VendingMachine::payment()
 { 
     //verify amount
     cout << endl;
-    while (!(ps.verifyPayment())) //user pay less than stock price
+    while (!ps.verifyPayment()) //escape loop if user payment success or cancel = true
     { 
         cout << "Not enough Payment! Please add RM " << fixed << setprecision(2)
              << ps.calcAddPayment() << " more => ";
         cin >> addPayment;
-        ps.updatePayment(addPayment);
+        if (addPayment > 0) //positive amount of payment
+        {
+            ps.updatePayment(addPayment);
+        }
+        else
+        {
+            cout << endl;
+            cout << "You have cancelled the payment!" << endl;
+            cout << "Refunding RM " << ps.getUserPay() << endl;
+            return false;
+        }
     }
+    
 
     //Payment successful when user pay more or equal to price
     cout << endl;
@@ -329,6 +341,7 @@ void VendingMachine::displayPayment()
         cout << "Payment Successful!" << endl;
         cout << "Your balance is RM " << fixed << setprecision(2) << ps.calcBalance() << endl;
     }
+    return true;
 }
 
 
@@ -403,22 +416,32 @@ int main(){
                 else
                 {
                     //ask user to input payment
+                    cout << endl;
+                    cout << "!! TO CANCEL THE PURCHASE, INPUT VALUE OF 0 OR LESS !!" << endl << endl;
                     cout << "Total amount to pay is RM " << list[inputID]->getPrice() << endl;
                     cout << "Enter amount to pay => RM ";
                     cin >> inputPayment;
 
-                    //using composition to access PaymentSystem
-                    VendingMachine v(inputPayment, list[inputID]->getPrice()); 
-                    v.displayPayment(); 
-                    cout << "Enjoy your " << list[inputID]->getName() << "!" << endl;
+                    if(inputPayment > 0)
+                    {
+                        //using composition to access PaymentSystem
+                        VendingMachine v(inputPayment, list[inputID]->getPrice()); 
 
-                    //stock - 1 after purchase successful
-                    (*list[inputID])--; //dereference object to be operator overload 
+                        if(v.payment()) //if purchase successful
+                        {
+                            //display item purchased and stock--
+                            cout << "Enjoy your " << list[inputID]->getName() << "!" << endl;
+                            (*list[inputID])--;//dereference object to be operator overload 
+                        } 
+                    }
+                    else
+                    {
+                        cout << endl;
+                        cout << "You have cancelled the payment!" << endl;
+                    }
                 }
             }
         }
-
-
         //ask for new operation until user choose exit
         vm.menu();
         cin >> inputID; 

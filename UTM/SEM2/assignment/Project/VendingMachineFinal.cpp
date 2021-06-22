@@ -333,17 +333,14 @@ bool VendingMachine::payment()
 
     //Payment successful when user pay more or equal to price
     cout << endl;
-    if (!cancel)
+    if(ps.calcBalance() == 0) //userpay == price
+    { 
+        cout << "Payment Successful!" << endl;
+    }
+    else //userpay > price
     {
-        if(ps.calcBalance() == 0) //userpay == price
-        { 
-            cout << "Payment Successful!" << endl;
-        }
-        else //userpay > price
-        {
-            cout << "Payment Successful!" << endl;
-            cout << "Your balance is RM " << fixed << setprecision(2) << ps.calcBalance() << endl;
-        }
+        cout << "Payment Successful!" << endl;
+        cout << "Your balance is RM " << fixed << setprecision(2) << ps.calcBalance() << endl;
     }
     return true;
 }
