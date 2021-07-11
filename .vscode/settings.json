@@ -4,6 +4,10 @@
         "xstring": "cpp",
         "iosfwd": "cpp",
         "limits": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "iomanip": "cpp",
+        "ostream": "cpp",
+        "ios": "cpp",
+        "xiosbase": "cpp"
     }
 }

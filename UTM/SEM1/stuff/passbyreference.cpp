@@ -5,7 +5,10 @@ void repeat(); //prototype (Datatype only)
 void change5(int&);
 
 int main(){
-  repeat(); //calling fx (val/var only. void not needed)
+  int x = 4;
+  change5(x);
+  cout << x;
+  //repeat(); //calling fx (val/var only. void not needed)
 }
 
 void change5(int &a){ //UD fx (datatype + var)
